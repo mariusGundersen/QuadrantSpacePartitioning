@@ -26,11 +26,11 @@ using System.Runtime.InteropServices;
 //
 //      Major Version
 //      Minor Version 
-//      IntoQuadrants Number
+//      IntoTree Number
 //      Revision
 //
-// You can specify all the values or you can default the IntoQuadrants and Revision Numbers 
+// You can specify all the values or you can default the IntoTree and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.1.0.0")]
-[assembly: AssemblyFileVersion("1.1.0.0")]
+[assembly: AssemblyVersion("1.1.1.0")]
+[assembly: AssemblyFileVersion("1.1.1.0")]

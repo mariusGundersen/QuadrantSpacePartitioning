@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ICanFindTheClosestPoint.cs" />
     <Compile Include="Partition.cs" />
     <Compile Include="Node.cs" />
     <Compile Include="IAmAPoint.cs" />

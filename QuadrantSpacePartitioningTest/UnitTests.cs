@@ -8,12 +8,12 @@ using Shouldly;
 namespace QuadrantSpacePartitioningTest
 {
     [TestFixture]
-    public class UnitTest1
+    public class UnitTests
     {
         [Test]
         public void TestBasic()
         {
-            var tree = Partition.IntoQuadrants(new List<IAmAPoint>
+            var tree = Partition.IntoTree(new List<IAmAPoint>
             {
                 new Point2D {X = 0, Y = 0},
                 new Point2D {X = -2, Y = -3},
@@ -35,7 +35,7 @@ namespace QuadrantSpacePartitioningTest
         [Test]
         public void TestDeeper()
         {
-            var tree = Partition.IntoQuadrants(new List<IAmAPoint>
+            var tree = Partition.IntoTree(new List<IAmAPoint>
             {
                 new Point2D {X = 0, Y = 0},
                 
@@ -75,7 +75,7 @@ namespace QuadrantSpacePartitioningTest
 
             var testPoint = new Point2D { X = rand.Next(0, 1000), Y = rand.Next(0, 1000) };
 
-            tree.FindClosestTo(testPoint).ShouldBe(point2Ds.OrderBy(p => (p.X - testPoint.X) * (p.X - testPoint.X) + (p.Y - testPoint.Y) * (p.Y - testPoint.Y)).First());
+            tree.FindClosestPointTo(testPoint).ShouldBe(point2Ds.OrderBy(p => (p.X - testPoint.X) * (p.X - testPoint.X) + (p.Y - testPoint.Y) * (p.Y - testPoint.Y)).First());
         }
 
         [Test]
@@ -89,12 +89,12 @@ namespace QuadrantSpacePartitioningTest
                 new Point2D {X = (decimal) 2.1, Y = (decimal) -2.1},
                 new Point2D {X = (decimal) 2.1, Y = (decimal) 2.1}
             };
-            var tree = Partition.IntoQuadrants(points);
+            var tree = Partition.IntoTree(points);
             tree.SouthWest.Points.Count().ShouldBe(4);
 
-            var testPoint = new Point2D { X = -1, Y = (decimal) -0.1 };
+            var testPoint = new Point2D { X = -1, Y = (decimal)-0.1 };
 
-            tree.FindClosestTo(testPoint).ShouldBe(points[2]);
+            tree.FindClosestPointTo(testPoint).ShouldBe(points[2]);
         }
     }
 

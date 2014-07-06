@@ -10,13 +10,18 @@ namespace QuadrantSpacePartitioning
         private static readonly Vector NorthWest = new Vector(-1, 1);
         private static readonly Vector SouthWest = new Vector(-1, -1);
         private static readonly Vector SouthEast = new Vector(1, -1);
-        
-        public static Node IntoQuadrants(IList<IAmAPoint> points)
+
+        public static ICanFindTheClosestPoint IntoQuadrants(IList<IAmAPoint> points)
         {
-            return IntoQuadrants(points, points, null);
+            return IntoTree(points);
+        }
+        
+        public static Node IntoTree(IList<IAmAPoint> points)
+        {
+            return RecursivelyPartition(points, points, null);
         }
 
-        private static Node IntoQuadrants(IList<IAmAPoint> probablyClosePoints, IList<IAmAPoint> pointsInQuadrant, IAmAPoint parentCenter)
+        private static Node RecursivelyPartition(IList<IAmAPoint> probablyClosePoints, IList<IAmAPoint> pointsInQuadrant, IAmAPoint parentCenter)
         {
             var avgX = pointsInQuadrant.Average(p => p.X);
             var avgY = pointsInQuadrant.Average(p => p.Y);
@@ -40,17 +45,16 @@ namespace QuadrantSpacePartitioning
             var notNorthWest = probablyClosePoints.Where(PointIsOnThisSideOf(center, NorthWest)).ToList();
             var notSouthWest = probablyClosePoints.Where(PointIsOnThisSideOf(center, SouthWest)).ToList();
             var notSouthEast = probablyClosePoints.Where(PointIsOnThisSideOf(center, SouthEast)).ToList();
-
-
+            
             return new Node
             {
                 X = center.X,
                 Y = center.Y,
                 Points = probablyClosePoints,
-                NorthEast = IntoQuadrants(notSouthWest, northEast, center),
-                NorthWest = IntoQuadrants(notSouthEast, northWest, center),
-                SouthWest = IntoQuadrants(notNorthEast, southWest, center),
-                SouthEast = IntoQuadrants(notNorthWest, southEast, center)
+                NorthEast = RecursivelyPartition(notSouthWest, northEast, center),
+                NorthWest = RecursivelyPartition(notSouthEast, northWest, center),
+                SouthWest = RecursivelyPartition(notNorthEast, southWest, center),
+                SouthEast = RecursivelyPartition(notNorthWest, southEast, center)
             };
         }
 
@@ -101,11 +105,6 @@ namespace QuadrantSpacePartitioning
             public Vector LeftNormal()
             {
                 return new Vector(-Y, X);
-            }
-
-            public Vector RightNormal()
-            {
-                return new Vector(Y, -X);
             }
 
             public Vector Rotate(double degrees)
