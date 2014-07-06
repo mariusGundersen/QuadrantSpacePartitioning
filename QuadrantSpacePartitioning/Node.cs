@@ -22,13 +22,27 @@ namespace QuadrantSpacePartitioning
                 Debug.WriteLine("{0} points to scan through", Points.Count());
                 return Points.OrderBy(p => p.DistanceTo(point.X, point.Y)).FirstOrDefault();
             }
-
-            Debug.WriteLine("({0}, {1}) compared to {2}, {3}, {4} point", X, Y, point.X, point.Y, Points.Count());
-
-            if (point.X >= X && point.Y >= Y) return NorthEast.FindClosestTo(point);
-            if (point.X <= X && point.Y >= Y) return NorthWest.FindClosestTo(point);
-            if (point.X <= X && point.Y <= Y) return SouthWest.FindClosestTo(point);
-            if (point.X >= X && point.Y <= Y) return SouthEast.FindClosestTo(point);
+            
+            if (point.X >= X && point.Y >= Y)
+            {
+                Debug.WriteLine("NorthEast ({0}, {1}) compared to {2}, {3}, {4} point", X, Y, point.X, point.Y, Points.Count());
+                return NorthEast.FindClosestTo(point);
+            }
+            if (point.X <= X && point.Y >= Y)
+            {
+                Debug.WriteLine("NortWest ({0}, {1}) compared to {2}, {3}, {4} point", X, Y, point.X, point.Y, Points.Count());
+                return NorthWest.FindClosestTo(point);
+            }
+            if (point.X <= X && point.Y <= Y)
+            {
+                Debug.WriteLine("SouthWest ({0}, {1}) compared to {2}, {3}, {4} point", X, Y, point.X, point.Y, Points.Count());
+                return SouthWest.FindClosestTo(point);
+            }
+            if (point.X >= X && point.Y <= Y)
+            {
+                Debug.WriteLine("SouthEast ({0}, {1}) compared to {2}, {3}, {4} point", X, Y, point.X, point.Y, Points.Count());
+                return SouthEast.FindClosestTo(point);
+            }
 
             throw new Exception("This cannot happen");
         }

@@ -33,7 +33,7 @@ namespace QuadrantSpacePartitioningTest
         }
 
         [Test]
-        public void Test2()
+        public void TestDeeper()
         {
             var tree = Partition.IntoQuadrants(new List<IAmAPoint>
             {
@@ -68,14 +68,33 @@ namespace QuadrantSpacePartitioningTest
             var rand = new Random();
             for (var i = 0; i < 1000; i++)
             {
-                point2Ds.Add(new Point2D{ X = rand.Next(0, 1000), Y = rand.Next(0, 1000)});
+                point2Ds.Add(new Point2D { X = rand.Next(0, 1000), Y = rand.Next(0, 1000) });
             }
 
             var tree = Partition.IntoQuadrants(point2Ds);
 
-            var testPoint = new Point2D {X = rand.Next(0, 1000), Y = rand.Next(0, 1000)};
+            var testPoint = new Point2D { X = rand.Next(0, 1000), Y = rand.Next(0, 1000) };
 
             tree.FindClosestTo(testPoint).ShouldBe(point2Ds.OrderBy(p => (p.X - testPoint.X) * (p.X - testPoint.X) + (p.Y - testPoint.Y) * (p.Y - testPoint.Y)).First());
+        }
+
+        [Test]
+        public void TestEdgeCase()
+        {
+            var points = new List<IAmAPoint>
+            {
+                new Point2D {X = 0, Y = 0},
+                new Point2D {X = (decimal) -2.1, Y = (decimal) -2.1},
+                new Point2D {X = (decimal) -0.3, Y = (decimal) 0.6},
+                new Point2D {X = (decimal) 2.1, Y = (decimal) -2.1},
+                new Point2D {X = (decimal) 2.1, Y = (decimal) 2.1}
+            };
+            var tree = Partition.IntoQuadrants(points);
+            tree.SouthWest.Points.Count().ShouldBe(4);
+
+            var testPoint = new Point2D { X = -1, Y = (decimal) -0.1 };
+
+            tree.FindClosestTo(testPoint).ShouldBe(points[2]);
         }
     }
 
@@ -83,5 +102,10 @@ namespace QuadrantSpacePartitioningTest
     {
         public decimal X { get; set; }
         public decimal Y { get; set; }
+
+        public override string ToString()
+        {
+            return String.Format("({0}, {1})", X, Y);
+        }
     }
 }

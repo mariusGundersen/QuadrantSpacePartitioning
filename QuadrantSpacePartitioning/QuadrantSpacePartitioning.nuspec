@@ -10,7 +10,7 @@
     <projectUrl>https://github.com/mariusGundersen/QuadrantSpacePartitioning</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>Initial working version</releaseNotes>
+    <releaseNotes>Fixed edge case issue</releaseNotes>
     <copyright>Copyright 2014</copyright>
     <tags>Point-search</tags>
   </metadata>
